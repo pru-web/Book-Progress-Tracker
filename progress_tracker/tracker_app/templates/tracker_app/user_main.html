@@ -1,0 +1,15 @@
+{% extends 'tracker_app/base.html' %}
+{% block title %}User Main Menu{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <h2>Welcome, {{ user.name }}</h2>
+    <p>Select an option:</p>
+    <ul>
+        <li><a href="{% url 'user_menu' user_id=user_id %}">Menu Page</a></li>
+        <li><a href="{% url 'progress_tracker_page' user_id=user_id %}">Track Progress</a></li>
+        <li><a href="{% url 'user_profile' user_id=user_id %}">User Profile</a></li>
+        
+    </ul>
+</div>
+{% endblock %}

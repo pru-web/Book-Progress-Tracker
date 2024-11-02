@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Book Progress Tracker{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li id="auth-link"></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>Progress Tracker &copy; 2024</p>
+    </footer>
+
+    <script>
+        function getCookie(name) {
+            const cookieArr = document.cookie.split(";");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if (name === cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
+        window.addEventListener("DOMContentLoaded", function() {
+            const authLink = document.getElementById("auth-link");
+            const userId = getCookie("user_id");
+            const adminId = getCookie("admin_id");
+
+            if (userId || adminId) {
+                authLink.innerHTML = '<a href="{% url "logout" %}">Logout</a>';  // Changed single quotes to double quotes
+            } else {
+                authLink.innerHTML = '<a href="{% url "login" %}">Login</a>';  // Changed single quotes to double quotes
+            }
+        });
+    </script>
+</body>
+</html>

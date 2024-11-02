@@ -1,0 +1,38 @@
+
+{% extends 'tracker_app/base.html' %}
+{% block title %}View Our Book Collection{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Books</title>
+</head>
+<body>
+    <h2>Available Books</h2>
+    <h3>You may search certain books from the search tab if you dont find your read here!</h3>
+    <a href="{% url 'user_menu' user_id=user_id %}">Back to Menu</a>
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li>
+                    <strong>Title:</strong> {{ book.title }} <br>
+                    <strong>Author:</strong> {{ book.authors }} <br>
+                    <strong>Description:</strong> {{ book.description }} <br>
+                    <strong>Category:</strong> {{ book.category }} <br>
+                    <strong>Publish Year:</strong> {{ book.publish_year }} <br>
+                    <strong>Rating:</strong> {{ book.rating }} <br>
+                    <strong>Pages:</strong> {{ book.pages }} <br>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books found.</p>
+    {% endif %}
+    
+</body>
+</html>
+{% endblock %} 

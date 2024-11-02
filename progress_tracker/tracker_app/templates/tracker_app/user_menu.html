@@ -1,0 +1,19 @@
+{% extends 'tracker_app/base.html' %}
+{% block title %}User Menus{% endblock %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Menu Page</title>
+</head>
+<body>
+    <h2>Welcome to the Menu Page</h2>
+    <ul>
+        <li><a href="{% url 'view_books' %}?user_id={{ user_id }}">View Books</a></li>
+        <li><a href="{% url 'search_books' user_id=user_id %}">Search Books & Add to Readlist</a></li>
+        <li><a href="{% url 'user_main' %}">Return to Main Menu</a></li>
+    </ul>
+</body>
+</html>
+{% endblock %} 

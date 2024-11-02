@@ -1,0 +1,58 @@
+<!-- user_main.html -->
+{% extends 'tracker_app/base.html' %}
+
+{% block title %}Progress Tracker{% endblock %}
+
+{% block content %}
+<h2>Your Readlist</h2>
+
+{% if readlist %}
+    <ul>
+        {% for entry in readlist %}
+            <li>
+                <strong>{{ entry.book.title }}</strong> by {{ entry.book.authors }}
+                <p>Status: {{ entry.status }}</p>
+                <p>Progress: {{ entry.progress }} / {{ entry.book.pages|default:"Unknown" }}</p>
+
+                <!-- Status Update Form -->
+                <form method="post" action="{% url 'progress_tracker_page' user_id=user_id %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="tracker_id" value="{{ entry.tracker_id }}">
+                    <input type="hidden" name="action" value="update_status">
+                    
+                    <label for="status">Update Status:</label>
+                    <select name="status">
+                        <option value="Not Yet Started" {% if entry.status == "Not Yet Started" %}selected{% endif %}>Not Yet Started</option>
+                        <option value="In Progress" {% if entry.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                        <option value="Complete" {% if entry.status == "Complete" %}selected{% endif %}>Complete</option>
+                    </select>
+
+                    <label for="progress_page">Progress (pages):</label>
+                    <input type="number" name="progress_page" value="{{ entry.progress }}" max="{{ entry.book.pages|default:0 }}">
+
+                    <button type="submit">Update</button>
+                </form>
+
+                <!-- Rating Form, only for Completed Books -->
+                {% if entry.status == "Complete" %}
+                    <form method="post" action="{% url 'progress_tracker_page' user_id=user_id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="tracker_id" value="{{ entry.tracker_id }}">
+                        <input type="hidden" name="action" value="rate_book">
+
+                        <label for="rating">Rate (1-5):</label>
+                        <input type="number" name="rating" min="1" max="5" step="0.1" value="{{ entry.book.rating|default:0 }}">
+
+                        <button type="submit">Rate</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Your readlist is empty. Go to the Menu Page - Search Book Option to add books.</p>
+{% endif %}
+
+<a href="{% url 'user_main' %}">Back to Main Menu</a> 
+
+{% endblock %}

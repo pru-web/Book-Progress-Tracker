@@ -1,0 +1,13 @@
+Installing Requirements
+To install all dependencies from this file, run:
+pip install -r requirements.txt
+
+Django==4.2.5         # Version of Django framework used for the frontend
+SQLAlchemy==2.0.9     # SQLAlchemy for ORM functionality
+alembic==1.11.1       # Alembic for database migrations with SQLAlchemy
+pandas==2.1.1         # Pandas for data cleaning and normalization
+numpy==1.24.3         # NumPy, if used for any numeric data handling
+bycrypt 
+
+# Download file from sqlite3 and and keep it in the C: drive 
+

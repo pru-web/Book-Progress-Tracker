@@ -1,0 +1,51 @@
+{% extends 'tracker_app/base.html' %}
+{% block title %}User Profile{% endblock %}
+{% block content %}
+<div class="profile-container">
+    <h2>User Profile for {{ user.name }}</h2>
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h3>Change Username</h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="new_username" placeholder="Enter new username">
+        <button type="submit" name="change_username">Change Username</button>
+    </form>
+    
+    <h3>Change Password</h3>
+    <form method="post">
+        {% csrf_token %}
+        <input type="password" name="new_password" placeholder="Enter new password">
+        <button type="submit" name="change_password">Change Password</button>
+    </form>
+    
+    <h3>Remove Book From Readlist</h3>
+    <form method="post">
+        {% csrf_token %}
+        <ul>
+            {% for tracker in readlist %}
+                <li>
+                    <label>
+                        <input type="checkbox" name="books" value="{{ tracker.tracker_id }}">
+                        {{ tracker.book.title }} by {{ tracker.book.authors }}
+                    </label>
+                </li>
+            {% empty %}
+                <li>No books in your readlist.</li>
+            {% endfor %}
+        </ul>
+        <button type="submit" name="remove_books">Remove Selected Books</button>
+    </form>
+
+    <a href="{% url 'user_main' %}">Back to Main Menu</a>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'tracker_app/base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="main-container">
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h1>Welcome to Your Progress Tracker</h1>
+        <p>This application helps users track their progress on books.
+        Register to get started now! 
+        Add your favourite books to your readlist, monitor your progress, and rate your completed books! </p>
+        
+        <a href="{% url 'login' %}">Login</a> | 
+        <a href="{% url 'register' %}">Register User</a>
+        
+    </div>
+</div>
+{% endblock %}
+
